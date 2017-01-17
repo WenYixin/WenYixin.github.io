@@ -18,7 +18,7 @@
 参赛背景跨专业基础奇差菜鸡一枚，HNU计算机研一在读。起初会参赛是因为上课的时候老师介绍了这个比赛，说参加这个的同学可以不用做论文报告，就果断报名了。由于确实是初次接触机器学习方面的知识，所以完全是从零看书开始的，开始的时候确实够呛，完全不知道怎么下手，后">
 <meta property="og:image" content="https://wenyixin.github.io/img/score.png">
 <meta property="og:image" content="https://wenyixin.github.io/img/pic.png">
-<meta property="og:updated_time" content="2017-01-17T05:08:04.000Z">
+<meta property="og:updated_time" content="2017-01-17T05:12:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DF大数据竞赛之搜狗用户画像经验总结">
 <meta name="twitter:description" content="2016 DataFountain 大数据精准营销之搜狗用户画像挖掘 参赛经验总结本文主要整理和记录了我个人的参赛经历以及其他队伍的解决方案。
@@ -200,9 +200,7 @@
 </blockquote>
 </li>
 <li><strong>word2vec的应用</strong><blockquote>
-<blockquote>
 <p><strong>第一个问题：根据词向量，该如何表达一篇文档呢？</strong>假设某文档中含有N个单词，每个单词使用K维的词向量表示。有人可能会说，把词向量拼起来，将一个文档形式化为$N∗KN∗K$的向d不就ok了吗？这个策略本身没有问题，但是在一般的情况下（非一般情况，比如卷积神经网络，利用pooling层可以解决维度不一致问题）这种做法并不合适，因为 <strong>无法解决不同的文档长度所导致的维度不一致问题</strong>。因此，我们采用了如下方法，<strong>把单词向量加和求平均</strong>，这种做法是有道理的：如果某一个单词表达能力越强，加和求平均得到的向量就越偏向该单词向量所指方向。<br><img src="/img/pic.png" alt="img"><br><strong>第二个问题：得到了文档在wv下的向量表达，又该如何使用呢？</strong> 首先，我们认为把K维的WV向量直接拼接在S-TFIWF特征上不是一个好的策略，因为S-TFIWF特征具有<strong>高稀疏度、高维度</strong>的特点，与WV这种稠密的形式区别过大。回顾上文中介绍到的Stacking集成框架，我们把WV特征拼接在了stack的第二层中，举个栗子：如果第一层有20个分类器，WV的维度为K，那么第二层特征的维度就变为了：K+20K+20。 S-TFIWF+WV从特征词与词向量这两个角度完成了文档的表达。</p>
-</blockquote>
 </blockquote>
 </li>
 </ul>

@@ -18,7 +18,7 @@
 参赛背景跨专业基础奇差菜鸡一枚，HNU计算机研一在读。起初会参赛是因为上课的时候老师介绍了这个比赛，说参加这个的同学可以不用做论文报告，就果断报名了。由于确实是初次接触机器学习方面的知识，所以完全是从零看书开始的，开始的时候确实够呛，完全不知道怎么下手，后">
 <meta property="og:image" content="https://wenyixin.github.io/img/score.png">
 <meta property="og:image" content="https://wenyixin.github.io/img/pic.png">
-<meta property="og:updated_time" content="2017-01-17T05:12:30.000Z">
+<meta property="og:updated_time" content="2017-01-17T05:14:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DF大数据竞赛之搜狗用户画像经验总结">
 <meta name="twitter:description" content="2016 DataFountain 大数据精准营销之搜狗用户画像挖掘 参赛经验总结本文主要整理和记录了我个人的参赛经历以及其他队伍的解决方案。
@@ -187,8 +187,7 @@
 <li>预测数据：5w个用户在某段时间的搜索词。</li>
 <li>性别、年龄和教育水平分别有：2、6、6个标签。</li>
 </ul>
-<h2 id="数据集下载"><a href="#数据集下载" class="headerlink" title="数据集下载"></a>数据集下载</h2><p>链接: <a href="http://pan.baidu.com/s/1sl8imlB" target="_blank" rel="external">http://pan.baidu.com/s/1sl8imlB</a> 密码: y3xn</p>
-<p>##方案概述</p>
+<h2 id="数据集下载"><a href="#数据集下载" class="headerlink" title="数据集下载"></a>数据集下载</h2><h2 id="链接-http-pan-baidu-com-s-1sl8imlB-密码-y3xn"><a href="#链接-http-pan-baidu-com-s-1sl8imlB-密码-y3xn" class="headerlink" title="链接: http://pan.baidu.com/s/1sl8imlB 密码: y3xn"></a>链接: <a href="http://pan.baidu.com/s/1sl8imlB" target="_blank" rel="external">http://pan.baidu.com/s/1sl8imlB</a> 密码: y3xn</h2><p>##方案概述</p>
 <p>###1.分词<br>分词工具其实挺多的，不过最后还是随大流用的jieba分词。<br>这里的具体做法是，把每个用户的搜索句一句一句单独分词并去除停用词，并将分词结果保存到文本train_corpus_2w_row.txt中。<br>其实这里有一个细节我当时没管，就是题目中要求预测结果是不能有0(即未知)的，所以开始做数据预处理的时候分类0的数据是应该清理掉的，这是做题的时候一个不严谨的地方。</p>
 <p>###2.构建tfidf特征矩阵<br>提取特征，转化成向量的一步。<br>这里计算tfidf用的是sklearn的计算tfidf的包，矩阵的存储用的是scipy的稀疏矩阵。<br>因为没有降维，所以当时的特征维度大概在35万维左右。本来是打算用PCA的，但是sklearn的PCA不支持稀疏矩阵=_,= 。而且降维的话，一般也是用于那种维度过于巨大(上亿)电脑内存不足无法处理的情况才使用的，而且往往不会使分类效果变好，甚至会差，35万*2万维的元素用稀疏存储完全足够，所以就没有做降维。<br>当时老师上课的时候还提了一点，说可以自己提取额外的特征，譬如词性(搜索词是动词多还是名词多这种)、搜索句长度、标点符号的使用等等，当时对这个方法抱有疑问没有尝试，不过后来想想确实是可行的。</p>
 <p>###3.分类模型<br>这一步主要是调sklearn的API，我来来回回尝试了好几个模型(svm,lr,sgdclassifier,bayes..)，这里出来效果最好的是svm，调参优化之后就得到了最终0.65958的成绩。<br>在这之后又咨询了几方的优化意见，得出的结论是<br>1.不要只用单个模型，可以尝试一下多模型结合，比如多模型投票、bagging、boosting、stacking等，事实上复赛高名次队伍也确实都是用了多模型。<br>2.参加竞赛其实就是个体力活，要不断的有人来调参数，有机器来跑程序，通过不断的尝试试来提高那0.0几%的成绩。</p>
